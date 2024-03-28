@@ -81,19 +81,23 @@ textarea:focus {
 }
 
 .stickynote {
+	padding: 1rem;
 	position: absolute;
 	background-color: yellow;
 	height: 250px;
 	width: 220px;
+	word-wrap: break-word;
+	overflow-y: scroll;
 	border: 1px solid black;
+	cursor: pointer;
 }
 
 
 .stickynote span{
-	display: flex;
-	justify-content: flex-end;
 	padding: 0.2rem 0.7rem;
 	font-size: 2rem;
 	cursor: pointer;
+	border: 1px dashed blue;
+	user-select: none;
 
 }
