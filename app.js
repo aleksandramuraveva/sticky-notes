@@ -23,6 +23,7 @@ console.log("everything works")
 		newNote.innerHTML = newNoteHtml;
 		notes.append(newNote);
 		reapplyDeleteNoteEventListeners();
+		positionNote(newNote);
 		clearNewNote();
 	
 	}
@@ -69,7 +70,7 @@ console.log("everything works")
 		lastOffsetY = e.offsetY;
 		isDragging = true;
 
-		console.log(lastOffsetX, lastOffsetY);
+		// console.log(lastOffsetX, lastOffsetY);
 
 		e.stopPropagation();
   	e.preventDefault();
@@ -82,47 +83,15 @@ console.log("everything works")
 			dragTarget = null;
 		}
 	})
-	//...........
 
-// 	// Implementation of dragging functionality
-// let isDragging = false;
-// let dragTarget = null;
+//..............
 
-// let lastOffsetX = 0;
-// let lastOffsetY = 0;
+	function positionNote(newNote) {
 
-// function dragNote(e) {
-//   if (!isDragging)
-//     return;
-
-//   const x = e.clientX - lastOffsetX;
-//   const y = e.clientY - lastOffsetY;
-//   dragTarget.style.left = `${x}px`;
-//   dragTarget.style.top = `${y}px`;
-// }
-
-// window.addEventListener("mousedown", (e) => {
-//   if (!e.target.classList.contains("drag"))
-//     return;
-
-//   dragTarget = e.target;
-//   lastOffsetX = e.clientX;
-//   lastOffsetY = e.clientY;
-//   isDragging = true;
-
-//   console.log(lastOffsetX, lastOffsetX);
-
-//   e.stopPropagation();
-//   e.preventDefault();
-// });
-
-// window.addEventListener("mousemove", dragNote);
-// window.addEventListener("mouseup", () => {
-//   if (isDragging) {
-//     isDragging = false;
-//     dragTarget = null;
-//   }
-// });
+		newNote.style.left = window.innerWidth / 2 - newNote.clientWidth / 2 + (-100 + Math.round(Math.random()*50)) + "px";
+		newNote.style.top = window.innerWidth / 2 - newNote.clientWidth / 2 + (-200 + Math.round(Math.random()*50)) + "px";
+		console.log(newNote.style.left);
+	}
 
 
 
