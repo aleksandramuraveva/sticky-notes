@@ -20,6 +20,7 @@ console.log("everything works")
 		<span class="deleteNote">&times;</span>`;
 		
 		newNote.classList.add("stickynote", "drag");
+		
 		newNote.innerHTML = newNoteHtml;
 		notes.append(newNote);
 		reapplyDeleteNoteEventListeners();
