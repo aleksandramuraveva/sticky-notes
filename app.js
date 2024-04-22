@@ -15,9 +15,16 @@ console.log("everything works")
 	function createNote() {
 		const newNote = document.createElement("div");
 
-		const newNoteHtml = `<h3>${newnoteTitle.value}</h3>
-		<p>${newnoteContent.value}</p>
-		<span class="deleteNote">&times;</span>`;
+		const newNoteHtml = `
+		<div class="note-inner">
+    <div class="note-content">
+      <h3>${newnoteTitle.value}</h3>
+      <p>${newnoteContent.value}</p>
+    </div>
+    <div class="note-footer">
+      <span class="deleteNote">&times;</span>
+    </div>
+  </div>`;
 		
 		newNote.classList.add("stickynote", "drag");
 		
@@ -35,7 +42,7 @@ console.log("everything works")
 	}
 
 	const deleteNote = (e) => {
-		e.target.parentNode.remove();
+		e.target.parentNode.parentNode.parentNode.remove();
 	}
 
 	function reapplyDeleteNoteEventListeners() {
@@ -56,11 +63,28 @@ console.log("everything works")
 	function dragNote(e) {
 		if(!isDragging) return;
 
-		const x = e.clientX - lastOffsetX;
-		const y = e.clientY - lastOffsetY;
+		const wrapper = document.querySelector('.wrapper');
+	  const wrapperRect = wrapper.getBoundingClientRect();
 
-		dragTarget.style.left = `${x}px`;
-		dragTarget.style.top = `${y}px`;
+	  let x = e.clientX - lastOffsetX;
+	  let y = e.clientY - lastOffsetY;
+
+	  // Checking if the note is within the left and right boundaries of the wrapper
+	  if (x < wrapperRect.left) x = wrapperRect.left;
+	  if (x > wrapperRect.right - dragTarget.clientWidth) x = wrapperRect.right - dragTarget.clientWidth;
+
+	  // Checking if the note is within the top and bottom boundaries of the wrapper
+	  if (y < wrapperRect.top) y = wrapperRect.top;
+	  if (y > wrapperRect.bottom - dragTarget.clientHeight) y = wrapperRect.bottom - dragTarget.clientHeight;
+
+	  dragTarget.style.left = `${x}px`;
+	  dragTarget.style.top = `${y}px`;
+
+		// const x = e.clientX - lastOffsetX;
+		// const y = e.clientY - lastOffsetY;
+
+		// dragTarget.style.left = `${x}px`;
+		// dragTarget.style.top = `${y}px`;
 	}
 
 	window.addEventListener("mousedown", (e) => {
@@ -89,11 +113,28 @@ console.log("everything works")
 
 	function positionNote(newNote) {
 
-		newNote.style.left = window.innerWidth / 2 - newNote.clientWidth / 2 + (-100 + Math.round(Math.random()*50)) + "px";
-		newNote.style.top = window.innerWidth / 2 - newNote.clientWidth / 2 + (-200 + Math.round(Math.random()*50)) + "px";
-		console.log(newNote.style.left);
+		 let x = window.innerWidth / 2 - newNote.clientWidth / 2 + (-100 + Math.round(Math.random()*50));
+  let y = window.innerHeight / 2 - newNote.clientHeight / 2 + (-200 + Math.round(Math.random()*50));
+
+  // Check if the note is within the left and right boundaries of the window
+  if (x < 0) x = 0;
+  if (x > window.innerWidth - newNote.clientWidth) x = window.innerWidth - newNote.clientWidth;
+
+  // Check if the note is within the top and bottom boundaries of the window
+  if (y < 0) y = 0;
+  if (y > window.innerHeight - newNote.clientHeight) y = window.innerHeight - newNote.clientHeight;
+
+  newNote.style.left = `${x}px`;
+  newNote.style.top = `${y}px`;
+  console.log(newNote.style.left);
+
 	}
 
+	window.addEventListener('resize', () => {
+  document.querySelectorAll('.stickynote').forEach(note => {
+    positionNote(note);
+  });
+});
 
 
 	reapplyDeleteNoteEventListeners();
