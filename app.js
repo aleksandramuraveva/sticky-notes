@@ -114,24 +114,24 @@ console.log("everything works")
 	function positionNote(newNote) {
 
 		 let x = window.innerWidth / 2 - newNote.clientWidth / 2 + (-100 + Math.round(Math.random()*50));
-  let y = window.innerHeight / 2 - newNote.clientHeight / 2 + (-200 + Math.round(Math.random()*50));
+  			let y = window.innerHeight / 2 - newNote.clientHeight / 2 + (-200 + Math.round(Math.random()*50));
 
-  // Check if the note is within the left and right boundaries of the window
-  if (x < 0) x = 0;
-  if (x > window.innerWidth - newNote.clientWidth) x = window.innerWidth - newNote.clientWidth;
+  		// Check if the note is within the left and right boundaries of the window
+  		if (x < 0) x = 0;
+  		if (x > window.innerWidth - newNote.clientWidth) x = window.innerWidth - newNote.clientWidth;
 
-  // Check if the note is within the top and bottom boundaries of the window
-  if (y < 0) y = 0;
-  if (y > window.innerHeight - newNote.clientHeight) y = window.innerHeight - newNote.clientHeight;
+  		// Check if the note is within the top and bottom boundaries of the window
+  		if (y < 0) y = 0;
+  		if (y > window.innerHeight - newNote.clientHeight) y = window.innerHeight - newNote.clientHeight;
 
-  newNote.style.left = `${x}px`;
-  newNote.style.top = `${y}px`;
-  console.log(newNote.style.left);
+  		newNote.style.left = `${x}px`;
+  		newNote.style.top = `${y}px`;
+  		console.log(newNote.style.left);
 
 	}
 
 	window.addEventListener('resize', () => {
-  document.querySelectorAll('.stickynote').forEach(note => {
+ 	document.querySelectorAll('.stickynote').forEach(note => {
     positionNote(note);
   });
 });
