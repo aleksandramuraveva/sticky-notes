@@ -10,13 +10,18 @@ console.log("everything works")
 	const newnoteTitle = document.querySelector(".newnote__title");
 	const newnoteContent = document.querySelector(".newnote__content");
 	const addNoteBtn = document.querySelector(".newnote__btn");
+	const notesArr = JSON.parse(localStorage.getItem('notes')) || [];
+
+
 
 
 	function createNote() {
 		const newNote = document.createElement("div");
+		const uniqueId = generateUniqueId();
+		console.log(`Generated unique ID: ${uniqueId}`);
 
 		const newNoteHtml = `
-		<div class="note-inner">
+		<div class="note-inner" data-id="${uniqueId}">
     <div class="note-content">
       <h3>${newnoteTitle.value}</h3>
       <p>${newnoteContent.value}</p>
@@ -25,6 +30,7 @@ console.log("everything works")
       <span class="deleteNote">&times;</span>
     </div>
   </div>`;
+  	
 		
 		newNote.classList.add("stickynote", "drag");
 		
@@ -32,8 +38,22 @@ console.log("everything works")
 		notes.append(newNote);
 		reapplyDeleteNoteEventListeners();
 		positionNote(newNote);
+
+		// Store the note in local storage
+    	storeNoteInLocalStorage(uniqueId, newnoteTitle.value, newnoteContent.value);
+    	
+    	console.log(notesArr)
 		clearNewNote();
 	
+	}
+
+
+
+	function generateUniqueId() {
+    const timestamp = Date.now(); // Use timestamp for uniqueness
+    console.log(timestamp)
+    const randomPart = Math.floor(Math.random() * 1000000); // Random number part
+    return `${timestamp}-${randomPart}`;
 	}
 
 	function clearNewNote() {
@@ -41,9 +61,81 @@ console.log("everything works")
 		newnoteContent.value = "";
 	}
 
-	const deleteNote = (e) => {
-		e.target.parentNode.parentNode.parentNode.remove();
+
+	//function to delete my note
+	function deleteNote(e) {
+    const noteElement = e.target.parentNode.parentNode.parentNode;
+    const uniqueId = noteElement.getAttribute("data-id");
+
+    // Remove the note from the DOM
+    noteElement.remove();
+
+    // Remove the note from local storage
+    removeNoteFromLocalStorage(uniqueId);
+}
+
+	// Function to remove a note from local storage
+	function removeNoteFromLocalStorage(id) {
+    const storedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+    const updatedNotes = storedNotes.filter((note) => note.id !== id);
+    localStorage.setItem("notes", JSON.stringify(updatedNotes));
 	}
+
+
+
+	// Function to store a note in local storage
+	function storeNoteInLocalStorage(id, title, content) {
+    const storedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+    storedNotes.push({ id, title, content });
+    localStorage.setItem("notes", JSON.stringify(storedNotes));
+	}
+
+	// Function to get notes from local storage
+
+	function loadNotesFromLocalStorage() {
+    const storedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+
+    storedNotes.forEach((note) => {
+        const uniqueId = note.id;
+        const title = note.title;
+        const content = note.content;
+
+        // Create a new note element
+        const newNote = document.createElement("div");
+        
+        newNote.setAttribute("data-id", uniqueId);
+
+        // Create the inner HTML for the note
+        const newNoteHtml = `
+		<div class="note-inner" data-id="${uniqueId}">
+    <div class="note-content">
+      <h3>${title}</h3>
+      <p>${content}</p>
+    </div>
+    <div class="note-footer">
+      <span class="deleteNote">&times;</span>
+    </div>
+  </div>`;
+  	
+		
+		newNote.classList.add("stickynote", "drag");
+
+        newNote.innerHTML = newNoteHtml;
+
+        notes.append(newNote);
+
+        // Reapply deleteNote event listeners
+        reapplyDeleteNoteEventListeners();
+
+        // Position the note
+        positionNote(newNote);
+    });
+}
+
+	// Getting notes when the page loads
+	loadNotesFromLocalStorage();
+
+
 
 	function reapplyDeleteNoteEventListeners() {
 		document.querySelectorAll(".deleteNote").forEach(btn => {
