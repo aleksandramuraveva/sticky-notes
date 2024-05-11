@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   
-console.log("everything works")
+// console.log("everything works")
 
 	const notes = document.querySelector(".notes");
 	const newnoteTitle = document.querySelector(".newnote__title");
@@ -50,7 +50,7 @@ console.log("everything works")
 
 
 	function generateUniqueId() {
-    const timestamp = Date.now(); // Use timestamp for uniqueness
+    const timestamp = Date.now(); // Using timestamp for uniqueness
     console.log(timestamp)
     const randomPart = Math.floor(Math.random() * 1000000); // Random number part
     return `${timestamp}-${randomPart}`;

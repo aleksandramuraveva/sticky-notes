@@ -11,14 +11,14 @@ body {
 	max-width: 1200px;
 	min-height: 100vh;
 	margin-inline: auto;
-	border: 1px solid red;
+	/*border: 1px solid red;*/
 }
 
 h3 {
 	text-align: center;
 	font-weight: bold;
 	font-family: cursive;
-	font-size: 1.2rem;
+	font-size: 1.4rem;
 	color: #ffffffee;
 }
 
@@ -30,7 +30,7 @@ h3 {
   	background-image: -webkit-linear-gradient(320deg, #7f00ff90, #e100ff90); /* Chrome 10-25, Safari 5.1-6 */
   	background-image: linear-gradient(320deg, #7f00ff90, #e100ff90); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 	overflow: hidden;
-	border: 3px dotted green;
+	/*border: 3px dotted green;*/
 	min-height: 100vh;
 }
 
@@ -97,7 +97,7 @@ textarea:focus {
   	flex-direction: column;
   	justify-content: space-between;
   	color: #333;
-	padding: 2rem 1.5rem;
+	padding: 3rem 1.5rem;
 	position: absolute;
 	border-radius: 20px;
 	background-color: rgba(255,255,255, 0.2);
@@ -133,6 +133,7 @@ textarea:focus {
 
 .note-content p{
 	margin-top: 1rem;
+	font-size: 1.2rem;
 }
 
 .note-footer {
