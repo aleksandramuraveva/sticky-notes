@@ -11,7 +11,7 @@ This is a simple and interactive sticky notes application built with HTML, CSS, 
 
 ## Future Work
 - Add functionality to allow dragging and moving of notes on mobile devices
-- Rewrite the application in Vue.js
+- Rebuild the application in Vue.js
 - Convert the application into a Progressive Web App (PWA) for offline use and a mobile-friendly experience
 
 ## Getting Started
